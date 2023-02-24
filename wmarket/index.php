@@ -1,0 +1,76 @@
+<?php
+require 'config.php';
+if(isset($_POST["register"])){
+  $name = $_POST["name"];
+  $username = $_POST["username"];
+  $email = $_POST["email"];
+  $password = $_POST["password"];
+  $phone = $_POST["phone"];
+
+  $user = mysqli_query($conn, "SELECT * FROM tb_users WHERE username = '$username' OR email = '$email'");
+  if(mysqli_num_rows($user) > 0){
+    echo
+    "
+    <script> alert('Username/Email Has Already Taken'); </script>
+    ";
+  }
+  else{
+    $query = "INSERT INTO tb_users VALUES('', '$name', '$username', '$email', '$password', '$phone')";
+    mysqli_query($conn, $query);
+    echo
+    "
+    <script> alert('Registration Successful'); </script>
+    ";
+  }
+}
+?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Registro</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  </head>
+  <body>
+    <form class="" action="" method="post">
+      <div class="title">
+        <h2>REGISTRARSE</h2>
+      </div>
+      <div class="half">
+        <div class="item">
+          <label for="">Nombre</label>
+          <input type="text" name="name" required value="">
+        </div>
+        <div class="item">
+          <label for="">Usuario</label>
+          <input type="text" name="username" required value="">
+        </div>
+      </div>
+      <div class="half">
+        <div class="item">
+          <label for="">Email</label>
+          <input type="text" name="email" required value="">
+        </div>
+        <div class="item">
+          <label for="">Contraseña</label>
+          <input type="password" name="password" required value="">
+        </div>
+      </div>
+      <div class="full">
+        <div class="item">
+          <label for="">Celular</label>
+          <input type="text" name="phone" required value="">
+        </div>
+      </div>
+      <div class="action">
+       <input type="submit" name = "register" value = "REGISTER">
+      </div>
+      <BR></BR>
+      <div class="action">
+     <a href="index.html"><input type="button" value="HOME"></a>
+      </div>
+    </form>
+    
+  </body>
+</html>
